@@ -10,7 +10,14 @@ class SpreadSheet:
     def get(self, cell: str) -> str:
         return self._cells.get(cell, '')
 
-    def evaluate(self, cell: str) -> int | str:
+    def evaluate(self, cell: str, visited=None) -> int | str:
+        if visited is None:
+            visited = set()
+        
+        if cell in visited:
+            return '#Circular'
+        
+        visited.add(cell)
         value = self.get(cell)
         
         # Check if the value is a valid integer
@@ -43,7 +50,7 @@ class SpreadSheet:
         # Check if the value is a cell reference starting with "="
         if value.startswith("="):
             referenced_cell = value[1:]
-            return self.evaluate(referenced_cell)
+            return self.evaluate(referenced_cell, visited)
         
         # If none of the above conditions are met, return #Error
         return '#Error'

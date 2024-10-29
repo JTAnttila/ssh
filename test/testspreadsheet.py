@@ -46,3 +46,10 @@ class TestSpreadSheet(TestCase):
         spreadsheet.set('B1', '42.5')
         spreadsheet.set('A1', '=B1')
         self.assertEqual('#Error', spreadsheet.evaluate('A1'))
+
+    #If the cell "A1" contains "=B1" and "B1" contains "=A1", the result of the evaluation of "A1" is "#Circular".
+    def test_circular_reference(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set('B1', '=A1')
+        spreadsheet.set('A1', '=B1')
+        self.assertEqual('#Circular', spreadsheet.evaluate('A1'))
