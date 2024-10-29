@@ -71,3 +71,9 @@ class TestSpreadSheet(TestCase):
         spreadsheet = SpreadSheet()
         spreadsheet.set('A1', '=1/0')
         self.assertEqual('#Error', spreadsheet.evaluate('A1'))
+
+    #If the cell "A1" contains "=1+3*2", the result of its evaluation is 9.
+    def test_evaluate_formula_with_precedence(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set('A1', '=1+3*2')
+        self.assertEqual(7, spreadsheet.evaluate('A1'))
