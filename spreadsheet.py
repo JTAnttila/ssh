@@ -47,10 +47,19 @@ class SpreadSheet:
             # If neither, return #Error
             return '#Error'
         
-        # Check if the value is a cell reference starting with "="
+        # Check if the value is a cell reference or formula starting with "="
         if value.startswith("="):
-            referenced_cell = value[1:]
-            return self.evaluate(referenced_cell, visited)
+            expression = value[1:]
+            # Check if it's a simple arithmetic expression
+            try:
+                result = eval(expression, {"__builtins__": {}})
+                if isinstance(result, int):
+                    return result
+                else:
+                    return '#Error'
+            except:
+                # If it's a cell reference
+                return self.evaluate(expression, visited)
         
         # If none of the above conditions are met, return #Error
         return '#Error'

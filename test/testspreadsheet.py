@@ -53,3 +53,9 @@ class TestSpreadSheet(TestCase):
         spreadsheet.set('B1', '=A1')
         spreadsheet.set('A1', '=B1')
         self.assertEqual('#Circular', spreadsheet.evaluate('A1'))
+
+    #If the cell "A1" contains "=1+3", the result of its evaluation is 4.
+    def test_evaluate_formula(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set('A1', '=1+3')
+        self.assertEqual(4, spreadsheet.evaluate('A1'))
