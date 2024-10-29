@@ -39,3 +39,10 @@ class TestSpreadSheet(TestCase):
         spreadsheet.set('B1', '42')
         spreadsheet.set('A1', '=B1')
         self.assertEqual(42, spreadsheet.evaluate('A1'))
+
+    #If the cell "A1" contains "=B1" and "B1" contains "42.5", the result of the evaluation of "A1" is "#Error".
+    def test_cell_reference_non_valid_integer(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set('B1', '42.5')
+        spreadsheet.set('A1', '=B1')
+        self.assertEqual('#Error', spreadsheet.evaluate('A1'))
