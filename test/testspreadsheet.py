@@ -84,3 +84,10 @@ class TestSpreadSheet(TestCase):
         spreadsheet.set('B1', '3')
         spreadsheet.set('A1', '=1+B1')
         self.assertEqual(4, spreadsheet.evaluate('A1'))
+
+    #If the cell "A1" contains "=1+B1" and the cell "B1" contains "3.1", the result of the evaluation of "A1" is "#Error".
+    def test_evaluate_formula_with_non_valid_integer(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set('B1', '3.1')
+        spreadsheet.set('A1', '=1+B1')
+        self.assertEqual('#Error', spreadsheet.evaluate('A1'))
