@@ -3,7 +3,6 @@ class SpreadSheet:
 
     def __init__(self):
         self._cells = {}
-        self._evaluating = set()
 
     def set(self, cell: str, value: str) -> None:
         self._cells[cell] = value
@@ -22,6 +21,9 @@ class SpreadSheet:
             if value.startswith("'") and value.endswith("'"):
                 return value[1:-1]
             elif value.startswith("='"):
-                return value[2:]
+                content = value[2:]
+                if content.isdigit():
+                    return int(content)
+                return content
             return '#Error'
 
