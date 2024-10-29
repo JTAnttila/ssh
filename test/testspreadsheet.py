@@ -77,3 +77,10 @@ class TestSpreadSheet(TestCase):
         spreadsheet = SpreadSheet()
         spreadsheet.set('A1', '=1+3*2')
         self.assertEqual(7, spreadsheet.evaluate('A1'))
+
+    #If the cell "A1" contains "=1+B1" and the cell "B1" contains "3", the result of the evaluation of "A1" is 4.
+    def test_evaluate_formula_with_cell_reference(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set('B1', '3')
+        spreadsheet.set('A1', '=1+B1')
+        self.assertEqual(4, spreadsheet.evaluate('A1'))

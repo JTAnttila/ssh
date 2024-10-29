@@ -53,6 +53,16 @@ class SpreadSheet:
             # If it's a cell reference
             if expression in self._cells:
                 return self.evaluate(expression, visited)
+            
+            # Replace cell references in the expression with their evaluated values
+            for ref in self._cells:
+                if ref in expression:
+                    ref_value = self.evaluate(ref, visited)
+                    if isinstance(ref_value, int):
+                        expression = expression.replace(ref, str(ref_value))
+                    else:
+                        return '#Error'
+            
             # Check if it's a simple arithmetic expression
             try:
                 result = eval(expression, {"__builtins__": {}})
