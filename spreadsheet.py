@@ -50,6 +50,9 @@ class SpreadSheet:
         # Check if the value is a cell reference or formula starting with "="
         if value.startswith("="):
             expression = value[1:]
+            # If it's a cell reference
+            if expression in self._cells:
+                return self.evaluate(expression, visited)
             # Check if it's a simple arithmetic expression
             try:
                 result = eval(expression, {"__builtins__": {}})
@@ -58,8 +61,7 @@ class SpreadSheet:
                 else:
                     return '#Error'
             except:
-                # If it's a cell reference
-                return self.evaluate(expression, visited)
+                return '#Error'
         
         # If none of the above conditions are met, return #Error
         return '#Error'
