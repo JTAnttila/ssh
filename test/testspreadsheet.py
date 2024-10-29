@@ -23,3 +23,9 @@ class TestSpreadSheet(TestCase):
         spreadsheet = SpreadSheet()
         spreadsheet.set('A1', "'Apple")
         self.assertEqual('#Error', spreadsheet.evaluate('A1'))
+
+    # test if cell "A1" contains "='Apple", the result of its evaluation is "Apple"
+    def test_evaluate_formula_string(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set('A1', "='Apple")
+        self.assertEqual('Apple', spreadsheet.evaluate('A1'))
