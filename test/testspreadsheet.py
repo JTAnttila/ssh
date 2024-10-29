@@ -18,3 +18,8 @@ class TestSpreadSheet(TestCase):
         spreadsheet = SpreadSheet()
         spreadsheet.set('A1', "'Apple'")
         self.assertEqual('Apple', spreadsheet.evaluate('A1'))
+
+    def test_evaluate_non_valid_string(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set('A1', "'Apple")
+        self.assertEqual('#Error', spreadsheet.evaluate('A1'))
